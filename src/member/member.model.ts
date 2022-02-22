@@ -16,6 +16,7 @@ export const Member = new Schema({
   ethnicity: { type: String, required: true },
   mainCenter: { type: String, required: true },
   membershipType: { type: String, required: true },
+  password: { type: String },
 })
 
 export interface IMember extends Document {
@@ -34,4 +35,5 @@ export interface IMember extends Document {
   ethnicity: String,
   mainCenter: String,
   membershipType: String,
+  password: String;
 }
