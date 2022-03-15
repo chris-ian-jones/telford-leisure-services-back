@@ -1,9 +1,8 @@
 import { Schema, Document } from 'mongoose';
 
 export const Member = new Schema({
-  title: { type: String },
-  forename: { type: String, required: true },
-  surname: { type: String, required: true },
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
   dateOfBirth: { type: Date, required: true, trim: true },
   gender: { type: String, required: true },
   email: { type: String, required: true },
@@ -21,8 +20,8 @@ export const Member = new Schema({
 
 export interface IMember extends Document {
   readonly _id: Schema.Types.ObjectId;
-  forename: String;
-  surname: String,
+  firstName: String;
+  lastName: String,
   dateOfBirth: Date,
   gender: String,
   email: String,

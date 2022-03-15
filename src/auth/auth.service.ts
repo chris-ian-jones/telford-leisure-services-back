@@ -51,13 +51,13 @@ export class AuthService {
     );
     if (!member) {
       throw new UnauthorizedException(
-        "Incorrect email or password",
+        "Incorrect member number or password",
       );
     }
     const validMember = bcrypt.compareSync(payload.password, member.password)
     if (!validMember) {
       throw new UnauthorizedException(
-        "Incorrect email or password",
+        "Incorrect member number or password",
       );
     }
     return member;
