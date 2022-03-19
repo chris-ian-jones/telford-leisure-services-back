@@ -2,15 +2,11 @@ import { IsNotEmpty, Matches } from "class-validator";
 
 export class SignUpPayloadDto {
 
-  title: string;
+  @IsNotEmpty({message: 'First name should not be empty'})
+  firstName: string;
 
-  @IsNotEmpty({message: 'Forename should not be empty'})
-  @Matches(/^[a-zA-Z ]+$/, {message: 'Forename should only contain letters'})
-  forename: string;
-
-  @IsNotEmpty({message: 'Surname should not be empty'})
-  @Matches(/^[a-zA-Z ]+$/, {message: 'Surname should only contain letters'})
-  surname: string;
+  @IsNotEmpty({message: 'Last name should not be empty'})
+  lastName: string;
 
   @IsNotEmpty({message: 'Date of birth should not be empty'})
   dateOfBirth: string;
