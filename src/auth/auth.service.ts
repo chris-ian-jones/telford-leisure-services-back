@@ -11,6 +11,11 @@ export interface ITokenReturnBody {
   token: string;
 }
 
+export interface ISignUpReturnBody {
+  memberNumber: string;
+  mainCenter: string;
+}
+
 @Injectable()
 export class AuthService {
 
