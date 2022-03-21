@@ -11,11 +11,8 @@ export class FeedbackService {
     ) {}
 
   async createNewFeedback(payload): Promise<IFeedback> {
-    console.log('payload: ', payload)
     const feedbackToCreate = new this.feedbackModel(payload)
-    console.log('feedbackToCreate: ', feedbackToCreate)
     const createdFeedback = await feedbackToCreate.save();
-    console.log('createdFeedback: ', createdFeedback)
     return createdFeedback;
   }
 }

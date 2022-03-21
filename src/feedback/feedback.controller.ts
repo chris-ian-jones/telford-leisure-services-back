@@ -12,7 +12,6 @@ export class FeedbackController {
   @Post('new')
   @UsePipes(ValidationPipe)
   async createNewFeedback(@Body() payload:FeedbackPayloadDto) {
-    console.log('payload1: ', payload)
     return await this.feedbackService.createNewFeedback(payload);
   }
 }
