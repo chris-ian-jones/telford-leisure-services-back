@@ -7,6 +7,8 @@ import { MemberModule } from './member/member.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Member } from './member/member.model';
+import { FeedbackModule } from './feedback/feedback.module';
+import { Feedback } from './feedback/feedback.model';
 
 @Module({
   imports: [
@@ -16,7 +18,9 @@ import { Member } from './member/member.model';
     MemberModule,
     MongooseModule.forFeature([
       { name: 'Member', schema: Member },
+      { name: 'Feedback', schema: Feedback },
     ]),
+    FeedbackModule,
   ],
   controllers: [AppController],
   providers: [
