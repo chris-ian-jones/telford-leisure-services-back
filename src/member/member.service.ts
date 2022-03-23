@@ -76,7 +76,14 @@ export class MemberService {
 
   sendNewConfirmationCodeEmail(confirmationCode, memberEmail) {
     const emailSubject = `Confirm your email address - Telford Leisure Services`;
-    const emailBody = `Confirmation code is ${confirmationCode}`
+    const emailBody = `
+      <span style="font-size: 16px">You have requested a code you can enter on Telford Leisure Services to confirm your email address.</span><br><br>
+      <span style="font-size: 16px">Your confirmation code is:</span><br><br><br><br>
+      <span style="font-size: 24px"><strong>${confirmationCode}</strong></span><br><br><br><br>
+      <span style="font-size: 16px">This code will expire in 30 minutes.</span><br><br>
+      <span style="font-size: 16px">If this email account is not shared, and you did not request this code, you need to contact Telford Leisure Services.</span><br><br>
+      <span style="font-size: 16px">This is an automatic email - please don’t reply.</span>
+    `
     const toEmail = memberEmail
     sendEmail(toEmail, emailSubject, emailBody)
   }
