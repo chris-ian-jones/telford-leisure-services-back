@@ -108,11 +108,27 @@ export class MemberService {
         "Incorrect confirmation code",
       )
     }
+    this.sendMemberNumberEmail(member.firstName, member.lastName, member.memberNumber, member.email);
     const response = {
       email: member.email,
       memberNumber: member.memberNumber
     }
     return response
+  }
+
+  sendMemberNumberEmail(firstName, lastName, memberNumber, memberEmail) {
+    const emailSubject = `Your recovered Telford Leisure Services member number`;
+    const emailBody = `
+      <span style="font-size: 16px">Dear ${firstName} ${lastName},</span><br><br>
+      <span style="font-size: 16px">We are sending your Telford Leisure Services member number, as requested.</span><br><br>
+      <span style="font-size: 16px">Your member number is:</span><br><br><br><br>
+      <span style="font-size: 24px"><strong>${memberNumber}</strong></span><br><br><br><br>
+      <span style="font-size: 16px"><string>Keep this email</strong> or make a note of your member number. You'll need it to sign in.</span><br><br>
+      <span style="font-size: 16px">If you (or anyone sharing this email address) did not request this, then contact Telford Leisure Services.</span><br><br>
+      <span style="font-size: 16px">This is an automatic email - please don’t reply.</span>
+    `
+    const toEmail = memberEmail
+    sendEmail(toEmail, emailSubject, emailBody)
   }
 
 }
