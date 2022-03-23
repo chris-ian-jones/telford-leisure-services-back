@@ -9,6 +9,7 @@ import * as bcrypt from "bcryptjs";
 import { EmailPayloadDto } from 'src/auth/dto/EmailPayload.dto';
 import * as moment from 'moment';
 import { sendEmail } from './../utils/sendEmail';
+import { ConfirmationCodePayloadDto } from 'src/auth/dto/ConfirmationCodePayload.dto';
 
 @Injectable()
 export class MemberService {
@@ -87,6 +88,33 @@ export class MemberService {
     const toEmail = memberEmail
     sendEmail(toEmail, emailSubject, emailBody)
   }
+
+  async validateConfirmationCode(payload:ConfirmationCodePayloadDto) {
+    const member = await this.getByEmail(payload.email);
+    if (!member) {
+      throw new NotAcceptableException(
+        "There is no account registered with the email address that you have entered.",
+      )
+    }
+    const confirmCodeExpiry = moment(member.confirmationCodeExpiry);
+    const timeNow = moment();
+    if (confirmCodeExpiry < timeNow) {
+      throw new NotAcceptableException(
+        "Confirmation code has expired. Go back and generate a new one",
+      )
+    }
+    if (payload.confirmationCode !== member.confirmationCode) {
+      throw new NotAcceptableException(
+        "Incorrect confirmation code",
+      )
+    }
+    const response = {
+      email: member.email,
+      memberNumber: member.memberNumber
+    }
+    return response
+  }
+
 }
 
 

@@ -4,6 +4,7 @@ import { MemberService } from './../member/member.service';
 import { SignInPayloadDto } from './dto/SignInPayload.dto';
 import { SignUpPayloadDto } from './dto/SignUpPayload.dto';
 import { EmailPayloadDto } from './dto/EmailPayload.dto';
+import { ConfirmationCodePayloadDto } from './dto/ConfirmationCodePayload.dto';
 
 @Controller('api/auth')
 export class AuthController {
@@ -30,7 +31,14 @@ export class AuthController {
   @Post('/generate-confirmation-code')
   @UsePipes(ValidationPipe)
   async sendConfirmationCodeEmail(@Body() payload: EmailPayloadDto): Promise<any> {
-    const member = await this.memberService.generateConfirmationCode(payload);
-    return member;
+    const response = await this.memberService.generateConfirmationCode(payload);
+    return response;
+  }
+
+  @Post('/validate-confirmation-code')
+  @UsePipes(ValidationPipe)
+  async validateConfirmationCode(@Body() payload: ConfirmationCodePayloadDto): Promise<any> {
+    const memberNumber = await this.memberService.validateConfirmationCode(payload);
+    return memberNumber;
   }
 }
