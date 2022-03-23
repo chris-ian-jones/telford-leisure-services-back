@@ -6,6 +6,9 @@ import { IMember } from './member.model';
 import { ISignUpReturnBody } from './../auth/auth.service';
 import * as randomize from 'randomatic';
 import * as bcrypt from "bcryptjs";
+import { EmailPayloadDto } from 'src/auth/dto/EmailPayload.dto';
+import * as moment from 'moment';
+import { sendEmail } from './../utils/sendEmail';
 
 @Injectable()
 export class MemberService {
@@ -54,6 +57,28 @@ export class MemberService {
       initialPassword,
       password
     }
+  }
+
+  async generateConfirmationCode(payload:EmailPayloadDto) {
+    const member = await this.getByEmail(payload.email);
+    if (!member) {
+      throw new NotAcceptableException(
+        "There is no account registered with the email address that you have entered.",
+      )
+    }
+    const confirmationCode = randomize('A', 6);
+    member.confirmationCode = confirmationCode;
+    member.confirmationCodeExpiry = moment().add(30, 'minutes').toDate();
+    this.sendNewConfirmationCodeEmail(confirmationCode, member.email)
+    member.save();
+    return {success: 'success'}
+  }
+
+  sendNewConfirmationCodeEmail(confirmationCode, memberEmail) {
+    const emailSubject = `Confirm your email address - Telford Leisure Services`;
+    const emailBody = `Confirmation code is ${confirmationCode}`
+    const toEmail = memberEmail
+    sendEmail(toEmail, emailSubject, emailBody)
   }
 }
 

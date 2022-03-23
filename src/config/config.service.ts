@@ -49,6 +49,7 @@ export class ConfigService {
       WEBTOKEN_EXPIRATION_TIME: joi.number().default(21600),
       RESETPASSWORDTOKEN_EXPIRATION_TIME: joi.number().default(1200),
       DB_URL: joi.string().regex(/^mongodb/),
+      SENDINBLUE_API_KEY: joi.string(),
     });
 
     /**

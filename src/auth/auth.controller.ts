@@ -3,6 +3,7 @@ import { AuthService, ISignUpReturnBody, ITokenReturnBody } from './auth.service
 import { MemberService } from './../member/member.service';
 import { SignInPayloadDto } from './dto/SignInPayload.dto';
 import { SignUpPayloadDto } from './dto/SignUpPayload.dto';
+import { EmailPayloadDto } from './dto/EmailPayload.dto';
 
 @Controller('api/auth')
 export class AuthController {
@@ -24,5 +25,12 @@ export class AuthController {
   async signInMember(@Body() payload: SignInPayloadDto): Promise<ITokenReturnBody> {
     const member = await this.authService.validateMember(payload);
     return await this.authService.createToken(member);
+  }
+
+  @Post('/generate-confirmation-code')
+  @UsePipes(ValidationPipe)
+  async sendConfirmationCodeEmail(@Body() payload: EmailPayloadDto): Promise<any> {
+    const member = await this.memberService.generateConfirmationCode(payload);
+    return member;
   }
 }

@@ -17,6 +17,8 @@ export const Member = new Schema({
   membershipType: { type: String, required: true },
   memberNumber: { type: String },
   password: { type: String },
+  confirmationCode: { type: String },
+  confirmationCodeExpiry: { type: Date }
 })
 
 export interface IMember extends Document {
@@ -37,4 +39,6 @@ export interface IMember extends Document {
   membershipType: String,
   memberNumber: String;
   password: String;
+  confirmationCode: String;
+  confirmationCodeExpiry: Date,
 }
