@@ -2,14 +2,13 @@ import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { SignUpPayloadDto } from './../auth/dto/SignUpPayload.dto';
-import { IMember } from './member.model';
+import { IMember, Member } from './member.model';
 import { ISignUpReturnBody } from './../auth/auth.service';
 import * as randomize from 'randomatic';
 import * as bcrypt from "bcryptjs";
 import { EmailPayloadDto } from 'src/auth/dto/EmailPayload.dto';
 import * as moment from 'moment';
 import { sendEmail } from './../utils/sendEmail';
-import { ConfirmationCodePayloadDto } from 'src/auth/dto/ConfirmationCodePayload.dto';
 
 @Injectable()
 export class MemberService {
@@ -89,7 +88,7 @@ export class MemberService {
     sendEmail(toEmail, emailSubject, emailBody)
   }
 
-  async validateConfirmationCode(payload:ConfirmationCodePayloadDto) {
+  async validateConfirmationCode(payload:any) {
     const member = await this.getByEmail(payload.email);
     if (!member) {
       throw new NotAcceptableException(
@@ -108,12 +107,24 @@ export class MemberService {
         "Incorrect confirmation code",
       )
     }
+    return member
+  }
+  
+  async forgotMemberNumber(payload) {
+    const member:any = await this.validateConfirmationCode(payload)
     this.sendMemberNumberEmail(member.firstName, member.lastName, member.memberNumber, member.email);
     const response = {
       email: member.email,
       memberNumber: member.memberNumber
     }
     return response
+  }
+
+  async resetPassword(payload) {
+    const member:any = await this.validateConfirmationCode(payload)
+    member.password = bcrypt.hashSync(payload.password)
+    member.save();
+    return { success: 'success' }
   }
 
   sendMemberNumberEmail(firstName, lastName, memberNumber, memberEmail) {

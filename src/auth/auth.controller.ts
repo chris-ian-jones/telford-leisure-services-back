@@ -4,7 +4,8 @@ import { MemberService } from './../member/member.service';
 import { SignInPayloadDto } from './dto/SignInPayload.dto';
 import { SignUpPayloadDto } from './dto/SignUpPayload.dto';
 import { EmailPayloadDto } from './dto/EmailPayload.dto';
-import { ConfirmationCodePayloadDto } from './dto/ConfirmationCodePayload.dto';
+import { ResetPasswordPayloadDto } from './dto/ResetPassword.dto';
+import { ForgotMemberNumberPayloadDto } from './dto/ForgotMemberNumber.dto';
 
 @Controller('api/auth')
 export class AuthController {
@@ -35,10 +36,17 @@ export class AuthController {
     return response;
   }
 
-  @Post('/validate-confirmation-code')
+  @Post('/forgot-member-number')
   @UsePipes(ValidationPipe)
-  async validateConfirmationCode(@Body() payload: ConfirmationCodePayloadDto): Promise<any> {
-    const memberNumber = await this.memberService.validateConfirmationCode(payload);
+  async forgotMemberNumber(@Body() payload: ForgotMemberNumberPayloadDto): Promise<any> {
+    const memberNumber = await this.memberService.forgotMemberNumber(payload);
     return memberNumber;
+  }
+
+  @Post('/change-password')
+  @UsePipes(ValidationPipe)
+  async resetPassword(@Body() payload: ResetPasswordPayloadDto): Promise<any> {
+    const response = await this.memberService.resetPassword(payload);
+    return response;
   }
 }
