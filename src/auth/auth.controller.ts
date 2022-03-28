@@ -36,6 +36,13 @@ export class AuthController {
     return response;
   }
 
+  @Post('/validate-confirmation-code')
+  @UsePipes(ValidationPipe)
+  async validateConfirmationCodeEmail(@Body() payload: ForgotMemberNumberPayloadDto): Promise<any> {
+    const response = await this.memberService.validateConfirmationCode(payload);
+    return { success: 'success' };
+  }
+
   @Post('/forgot-member-number')
   @UsePipes(ValidationPipe)
   async forgotMemberNumber(@Body() payload: ForgotMemberNumberPayloadDto): Promise<any> {
