@@ -12,7 +12,7 @@ import { Feedback } from './feedback/feedback.model';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ignoreEnvFile: true,}),
+    ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.DB_URL),
     AuthModule, 
     MemberModule,

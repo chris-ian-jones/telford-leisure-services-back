@@ -23,7 +23,6 @@ export class ConfigService {
    * @param {string} filePath
    */
   constructor(filePath: string) {
-    require('dotenv').config({silent: true});
     const config = dotenv.parse(fs.readFileSync(filePath));
     this.envConfig = ConfigService.validateInput(config);
 
