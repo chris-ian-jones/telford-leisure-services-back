@@ -137,7 +137,7 @@ export class MemberService {
       <span style="font-size: 16px">We are sending your Telford Leisure Services member number, as requested.</span><br><br>
       <span style="font-size: 16px">Your member number is:</span><br><br><br><br>
       <span style="font-size: 24px"><strong>${memberNumber}</strong></span><br><br><br><br>
-      <span style="font-size: 16px"><string>Keep this email</strong> or make a note of your member number. You'll need it to sign in.</span><br><br>
+      <span style="font-size: 16px"><strong>Keep this email</strong> or make a note of your member number. You'll need it to sign in.</span><br><br>
       <span style="font-size: 16px">If you (or anyone sharing this email address) did not request this, then contact Telford Leisure Services.</span><br><br>
       <span style="font-size: 16px">This is an automatic email - please don’t reply.</span>
     `
