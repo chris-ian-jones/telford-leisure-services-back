@@ -37,6 +37,7 @@ export class MemberService {
       )
     }
     const newMemberData = this.generateUsernameAndInitialPassword(payload)
+    const tempInitialPassword = newMemberData.initialPassword;
     const responsePayload = {
       memberNumber: newMemberData.memberNumber,
       mainCenter: newMemberData.mainCenter
@@ -44,6 +45,8 @@ export class MemberService {
     delete newMemberData['initialPassword'];
     const createdMember = new this.memberModel(newMemberData);
     createdMember.save()
+    this.sendMemberNumberEmail(createdMember.firstName, createdMember.lastName, createdMember.memberNumber, createdMember.email, true);
+    this.sendInitialPasswordEmail(createdMember.firstName, createdMember.lastName, tempInitialPassword, createdMember.email);
     return responsePayload;
   }
 
@@ -112,7 +115,7 @@ export class MemberService {
   
   async forgotMemberNumber(payload) {
     const member:any = await this.validateConfirmationCode(payload)
-    this.sendMemberNumberEmail(member.firstName, member.lastName, member.memberNumber, member.email);
+    this.sendMemberNumberEmail(member.firstName, member.lastName, member.memberNumber, member.email, false);
     const response = {
       email: member.email,
       memberNumber: member.memberNumber
@@ -127,14 +130,29 @@ export class MemberService {
     return { success: 'success' }
   }
 
-  sendMemberNumberEmail(firstName, lastName, memberNumber, memberEmail) {
-    const emailSubject = `Your recovered Telford Leisure Services member number`;
+  sendMemberNumberEmail(firstName, lastName, memberNumber, memberEmail, newFlag) {
+    const emailSubject = `Your ${newFlag ? 'recovered' : ''} Telford Leisure Services member number`;
     const emailBody = `
       <span style="font-size: 16px">Dear ${firstName} ${lastName},</span><br><br>
       <span style="font-size: 16px">We are sending your Telford Leisure Services member number, as requested.</span><br><br>
       <span style="font-size: 16px">Your member number is:</span><br><br><br><br>
       <span style="font-size: 24px"><strong>${memberNumber}</strong></span><br><br><br><br>
       <span style="font-size: 16px"><string>Keep this email</strong> or make a note of your member number. You'll need it to sign in.</span><br><br>
+      <span style="font-size: 16px">If you (or anyone sharing this email address) did not request this, then contact Telford Leisure Services.</span><br><br>
+      <span style="font-size: 16px">This is an automatic email - please don’t reply.</span>
+    `
+    const toEmail = memberEmail
+    sendEmail(toEmail, emailSubject, emailBody)
+  }
+
+  sendInitialPasswordEmail(firstName, lastName, initialPassword, memberEmail) {
+    const emailSubject = `Your Telford Leisure Services login password`;
+    const emailBody = `
+      <span style="font-size: 16px">Dear ${firstName} ${lastName},</span><br><br>
+      <span style="font-size: 16px">We are sending your Telford Leisure Services login password, as requested.</span><br><br>
+      <span style="font-size: 16px">Your login password is:</span><br><br><br><br>
+      <span style="font-size: 24px"><strong>${initialPassword}</strong></span><br><br><br><br>
+      <span style="font-size: 16px">We strongly advise you to login to your account and change your password.</span><br><br>
       <span style="font-size: 16px">If you (or anyone sharing this email address) did not request this, then contact Telford Leisure Services.</span><br><br>
       <span style="font-size: 16px">This is an automatic email - please don’t reply.</span>
     `
