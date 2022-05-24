@@ -6,5 +6,4 @@ export class MemberController {
   
   constructor(memberService: MemberService) {}
 
-  
 }

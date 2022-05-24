@@ -3,7 +3,6 @@ import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcryptjs";
 import { ConfigService } from './../config/config.service';
 import { MemberService } from './../member/member.service';
-import { EmailPayloadDto } from './dto/EmailPayload.dto';
 import { SignInPayloadDto } from './dto/SignInPayload.dto';
 
 export interface ITokenReturnBody {

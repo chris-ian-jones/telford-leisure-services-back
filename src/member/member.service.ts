@@ -2,7 +2,7 @@ import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { SignUpPayloadDto } from './../auth/dto/SignUpPayload.dto';
-import { IMember, Member } from './member.model';
+import { IMember } from './member.model';
 import { ISignUpReturnBody } from './../auth/auth.service';
 import * as randomize from 'randomatic';
 import * as bcrypt from "bcryptjs";
@@ -161,5 +161,3 @@ export class MemberService {
   }
 
 }
-
-
