@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from './../config/config.module';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { MemberModule } from './../member/member.module';
-import { ConfigModule } from './../config/config.module';
 import { AuthController } from './auth.controller';
 import { ConfigService } from './../config/config.service';
 import { AuthService } from './auth.service';
