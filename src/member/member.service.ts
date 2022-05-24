@@ -131,7 +131,7 @@ export class MemberService {
   }
 
   sendMemberNumberEmail(firstName, lastName, memberNumber, memberEmail, newFlag) {
-    const emailSubject = `Your ${newFlag ? 'recovered' : ''} Telford Leisure Services member number`;
+    const emailSubject = `Your ${newFlag ? '' : 'recovered'} Telford Leisure Services member number`;
     const emailBody = `
       <span style="font-size: 16px">Dear ${firstName} ${lastName},</span><br><br>
       <span style="font-size: 16px">We are sending your Telford Leisure Services member number, as requested.</span><br><br>
