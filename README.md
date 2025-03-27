@@ -54,7 +54,7 @@ name | default | description
 `WEBTOKEN_SECRET_KEY` | | Specifies the secret string used to sign any JWTs - should be at least 32 characters, but the longer the better.
 `WEBTOKEN_EXPIRATION_TIME` | `21600` | Specifies the amount of seconds before any generated JWTs expires.
 `DB_URL` | | In order to connect to MongoDB, you will need a URI string (Uniform Resource Identifier) which is similar to a URL. For the URI string to work, you have to set up authentication for your MongoDB instance, and have created a username and password for read and write access to a MongoDB database.
-`SENDINBLUE_API_KEY` | | Specifies the API key for your sendinblue account.
+`RESEND_API_KEY` | | Specifies the API key for your [resend](https://resend.com/) account.
 
 
 ---
@@ -63,7 +63,7 @@ name | default | description
 
 - [Nest.js](https://nestjs.com/) - A progressive Node.js framework for building efficient, reliable and scalable server-side applications
 - [MongoDB Atlas](https://www.mongodb.com/atlas) - The multi-cloud application data platform
-- [Sendinblue](https://www.sendinblue.com/) - Sendinblue’s API is used as an email router to send out emails
+- [Resend](https://www.resend.com/) - Resend’s API is used as an email router to send out emails
 
 ---
 
